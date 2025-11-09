@@ -478,10 +478,10 @@
                     <h3>Kuliner</h3>
                     <p>Makanan & Minuman</p>
                 </div>
-                <div class="category-card" onclick="filterCategory('pendidikan')">
+                <div class="category-card" onclick="filterCategory('barang')">
                     <div class="category-icon">📚</div>
-                    <h3>Pendidikan</h3>
-                    <p>Alat Tulis & Buku</p>
+                    <h3>Produk</h3>
+                    <p>Barang sehari hari</p>
                 </div>
                 <div class="category-card" onclick="filterCategory('jasa')">
                     <div class="category-icon">⚙️</div>
@@ -504,76 +504,84 @@
     <script>
         const umkmData = [
             {
-                name: "Warung Makan Bu Siti",
-                icon: "w",
-                desc: "Menyajikan makanan tradisional dengan cita rasa autentik",
+                name: "Waffle Cone",
+                icon: "eskrim",
+                desc: "eskrim",
                 category: "makanan",
                 details: ["⏰ Buka: 07.00 - 20.00", "📍 Jl. Pendidikan No. 12", "💰 Rp 10.000 - 25.000"],
-                link: "warungbusiti.html"
+                link: "wafflecone.html"
             },
             {
-                name: "Toko Buku Cerdas",
-                icon: "📚",
+                name: "SidoMuncul",
+                icon: "si",
                 desc: "Lengkap dengan alat tulis dan buku pelajaran",
-                category: "pendidikan",
+                category: "makanan",
                 details: ["⏰ Buka: 08.00 - 18.00", "📍 Jl. Ilmu No. 5", "💰 Diskon 10% pelajar"],
-                link: "tokobukucerdas.html"
+                link: "sidomuncul.html"
             },
             {
-                name: "Fotokopi & Print Kilat",
-                icon: "🖨️",
+                name: "Warung Doa Ibu",
+                icon: "war",
                 desc: "Layanan cepat untuk kebutuhan sekolah Anda",
-                category: "jasa",
-                details: ["⏰ Buka: 06.30 - 21.00", "📍 Depan Gerbang", "💰 Print Rp 300/lembar"]
+                category: "makanan",
+                details: ["⏰ Buka: 06.30 - 21.00", "📍 Depan Gerbang", "💰 Print Rp 300/lembar"],
+                link : "warungdoaibu.html"
             },
             {
-                name: "Kedai Kopi Pelajar",
-                icon: "☕",
+                name: "Si Dotang Uni Ita",
+                icon: "donat",
                 desc: "Tempat nongkrong asik dengan WiFi gratis",
                 category: "makanan",
-                details: ["⏰ Buka: 09.00 - 22.00", "📍 Jl. Merdeka No. 18", "💰 Kopi mulai Rp 8.000"]
+                details: ["⏰ Buka: 09.00 - 22.00", "📍 Jl. Merdeka No. 18", "💰 Kopi mulai Rp 8.000"],
+                link   : "sidotanguniita.html"
             },
             {
-                name: "Laundry Express",
-                icon: "👕",
+                name: "Toko Restu Ibu",
+                icon: "klon",
                 desc: "Cuci kilat seragam dan pakaian sehari-hari",
-                category: "jasa",
-                details: ["⏰ Buka: 07.00 - 20.00", "📍 Jl. Bersih No. 9", "💰 Rp 5.000/kg"]
-            },
-            {
-                name: "Toko Sepatu & Tas",
-                icon: "👟",
-                desc: "Sepatu sekolah dan tas berkualitas",
-                category: "pendidikan",
-                details: ["⏰ Buka: 08.00 - 19.00", "📍 Jl. Fashion No. 21", "💰 Mulai Rp 75.000"]
-            },
-            {
-                name: "Barbershop Keren",
-                icon: "💈",
-                desc: "Potong rambut stylish untuk pelajar",
-                category: "jasa",
-                details: ["⏰ Buka: 09.00 - 20.00", "📍 Jl. Gaya No. 7", "💰 Rp 15.000 - 30.000"]
-            },
-            {
-                name: "Toko Seragam Sekolah",
-                icon: "🎽",
-                desc: "Seragam lengkap dengan kualitas terbaik",
-                category: "pendidikan",
-                details: ["⏰ Buka: 08.00 - 17.00", "📍 Jl. Seragam No. 3", "💰 Paket Rp 200.000"]
-            },
-            {
-                name: "Warung Es & Jajanan",
-                icon: "🍧",
-                desc: "Beragam es segar dan camilan enak",
                 category: "makanan",
-                details: ["⏰ Buka: 10.00 - 21.00", "📍 Samping Lapangan", "💰 Mulai Rp 5.000"]
+                details: ["⏰ Buka: 07.00 - 20.00", "📍 Jl. Bersih No. 9", "💰 Rp 5.000/kg"],
+                link: "tokorestuibu.html"
             },
             {
-                name: "Bengkel Sepeda",
-                icon: "🚲",
+                name: "Soda Gembira",
+                icon: "soda",
+                desc: "Sepatu sekolah dan tas berkualitas",
+                category: "makanan",
+                details: ["⏰ Buka: 08.00 - 19.00", "📍 Jl. Fashion No. 21", "💰 Mulai Rp 75.000"],
+                link: "sodagembira.html"
+            },
+            {
+                name: "Nasi Kebuli & Ayam panggang",
+                icon: "nasi",
+                desc: "Potong rambut stylish untuk pelajar",
+                category: "makanan",
+                details: ["⏰ Buka: 09.00 - 20.00", "📍 Jl. Gaya No. 7", "💰 Rp 15.000 - 30.000"],
+                link: "nasikebuliayam.html"
+            },
+            {
+                name: "Toko Beras 'Karya pusaka'",
+                icon: "bears",
+                desc: "Seragam lengkap dengan kualitas terbaik",
+                category: "makanan",
+                details: ["⏰ Buka: 08.00 - 17.00", "📍 Jl. Seragam No. 3", "💰 Paket Rp 200.000"],
+                link: "tokoberaskaryapusaka.html"
+            },
+            {
+                name: "Toko Lidya",
+                icon: "palstik",
+                desc: "Beragam es segar dan camilan enak",
+                category: "barang",
+                details: ["⏰ Buka: 10.00 - 21.00", "📍 Samping Lapangan", "💰 Mulai Rp 5.000"],
+                link: "tokolidya.html"
+            },
+            {
+                name: "fotokopi lisa",
+                icon: "fotokopi",
                 desc: "Service dan perbaikan sepeda cepat",
                 category: "jasa",
-                details: ["⏰ Buka: 07.00 - 18.00", "📍 Jl. Roda No. 15", "💰 Service Rp 10.000"]
+                details: ["⏰ Buka: 07.00 - 18.00", "📍 Jl. Roda No. 15", "💰 Service Rp 10.000"],
+                link: "fotokopilisa.html"
             }
         ];
 
