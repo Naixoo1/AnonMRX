@@ -251,128 +251,63 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
-        /* Reviews */
-        .reviews-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Photo Gallery */
+        .gallery-header {
             margin-bottom: 2rem;
         }
 
-        .rating-summary {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
 
-        .rating-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .stars {
-            font-size: 1.5rem;
-            color: #ffd700;
-        }
-
-        .add-review-btn {
-            padding: 0.8rem 1.5rem;
-            background: rgba(102, 126, 234, 0.2);
-            border: 1px solid #667eea;
-            border-radius: 25px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .add-review-btn:hover {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .review-card {
+        .photo-item {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .review-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: #667eea;
-            transform: translateX(5px);
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .reviewer-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .reviewer-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .reviewer-name {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .review-date {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        .review-stars {
-            color: #ffd700;
-        }
-
-        .review-text {
-            color: #ccc;
-            line-height: 1.6;
-            margin-top: 0.5rem;
-        }
-
-        .review-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .action-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            color: #aaa;
+            overflow: hidden;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 0.9rem;
+            position: relative;
         }
 
-        .action-btn:hover {
-            background: rgba(102, 126, 234, 0.2);
+        .photo-item:hover {
+            transform: translateY(-5px);
             border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover .photo-img {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 1rem;
             color: white;
+        }
+
+        .photo-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .photo-desc {
+            font-size: 0.9rem;
+            color: #ccc;
         }
 
         /* Contact Section */
@@ -448,7 +383,7 @@
         <div class="hero-content">
             <div class="hero-icon" id="heroIcon">🍗</div>
             <div class="hero-info">
-                <h1 id="umkmName">Toko Buku Cerdas</h1>
+                <h1 id="umkmName">Nasi Kebuli Ayam Panggang</h1>
                 <p id="umkmDesc">Nasi kebuli dengan ayam panggang spesial</p>
                 <div class="info-tags">
                     <span class="tag">⏰ 09.00 - 20.00</span>
@@ -474,7 +409,6 @@
                         <li>Bahan segar setiap hari</li>
                         <li>Tempat bersih dan nyaman</li>
                         <li>Tersedia paket hemat untuk pelajar</li>
-                        <li>Bisa pesan antar untuk rombongan</li>
                     </ul>
                 </div>
             </div>
@@ -518,24 +452,31 @@
             </div>
         </div>
 
-        <!-- Reviews Section -->
+        <!-- Photo Gallery Section -->
         <div class="section">
-            <div class="reviews-header">
-                <div>
-                    <h2>⭐ Ulasan & Rating</h2>
-                    <div class="rating-summary">
-                        <div class="rating-number">4.8</div>
-                        <div>
-                            <div class="stars">★★★★★</div>
-                            <p style="color: #888; font-size: 0.9rem; margin-top: 0.3rem;">Dari 127 ulasan</p>
-                        </div>
+            <h2>📸 Galeri Foto</h2>
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="https://via.placeholder.com/300x200/667eea/ffffff?text=Nasi+Kebuli" alt="Nasi Kebuli" class="photo-img">
+                    <div class="photo-overlay">
+                        <div class="photo-title">Nasi Kebuli Special</div>
+                        <div class="photo-desc">Nasi kebuli dengan ayam panggang</div>
                     </div>
                 </div>
-                <button class="add-review-btn" onclick="addReview()">✍️ Tulis Ulasan</button>
-            </div>
-
-            <div id="reviewsContainer">
-                <!-- Reviews will be loaded here -->
+                <div class="photo-item">
+                    <img src="https://via.placeholder.com/300x200/764ba2/ffffff?text=Ayam+Panggang" alt="Ayam Panggang" class="photo-img">
+                    <div class="photo-overlay">
+                        <div class="photo-title">Ayam Panggang</div>
+                        <div class="photo-desc">Ayam panggang dengan bumbu spesial</div>
+                    </div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://via.placeholder.com/300x200/667eea/ffffff?text=Tempat+Makan" alt="Tempat Makan" class="photo-img">
+                    <div class="photo-overlay">
+                        <div class="photo-title">Suasana Tempat</div>
+                        <div class="photo-desc">Tempat yang bersih dan nyaman</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -804,7 +745,7 @@
                         <p style="color: #aaa; margin-top: 0.3rem;">Tersedia parkir sepeda & motor gratis</p>
                     </div>
                 </div>
-                <button class="directions-btn" onclick="location.href"https://maps.app.goo.gl/dxo8Bgor8DC8URL48"">
+                <button class="directions-btn" onclick="location.href='https://maps.app.goo.gl/dxo8Bgor8DC8URL48'">
                     🧭 Petunjuk Arah
                 </button>
             `;

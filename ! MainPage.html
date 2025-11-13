@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UMKM KARAWANG</title>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initMaps"></script>
     <style>
         * {
             margin: 0;
@@ -12,7 +13,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Montserrat', Inter, Geneva, Verdana, sans-serif;
             background: #0a0a0a;
             color: #fff;
             overflow-x: hidden;
@@ -84,6 +85,39 @@
             display: flex;
             gap: 1rem;
             align-items: center;
+            position: relative;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 0;
+            padding: 0;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-input.active {
+            width: 200px;
+            padding: 0.5rem 1rem;
+            opacity: 1;
+            margin-right: 0.5rem;
         }
 
         .icon-btn {
@@ -97,11 +131,64 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s;
+            z-index: 10;
+            position: relative;
         }
 
         .icon-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: scale(1.1);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            min-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-result-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .search-result-desc {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .no-results {
+            padding: 1rem;
+            text-align: center;
+            color: #888;
         }
 
         /* Hero Section */
@@ -444,9 +531,11 @@
             <li><a href="#kontak">📞 Kontak</a></li>
         </ul>
         <div class="nav-icons">
-            <div class="icon-btn">🔎</div> 
-            <div class="icon-btn">🌙</div>
-            <div class="icon-btn">👤</div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Cari UMKM..." id="searchInput">
+                <div class="icon-btn" id="searchBtn">🔎</div>
+                <div class="search-results" id="searchResults"></div>
+            </div>
         </div>
     </nav>
 
@@ -458,7 +547,7 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">UMKM KARAWANG</h1>
-            <p class="hero-subtitle">WEBSITE UMKM KARAWANG</p>
+            <p class="hero-subtitle">Selamat Datang Di Website UMKM KRW!</p>
             <button class="hero-cta" onclick="scrollToUMKM()">
                 Lihat UMKM →
             </button>
@@ -508,6 +597,7 @@
                 icon: "🍦",
                 desc: "Ice Cream lezat dengan side dish unik",
                 category: "makanan",
+                address: "Jl. Kertabumi no. 34, Karawang, Jawa Barat",
                 details: ["⏰ Buka: 08.00 - 17.00", "📍 Jl. Kertabumi no. 34", "💰 Rp 10.000 - Rp. 25.000"],
                 link: "wafflecone.html"
             },
@@ -516,7 +606,8 @@
                 icon: "🍷",
                 desc: "Herbal tradisional untuk kesehatan Anda",
                 category: "makanan",
-                details: ["⏰ Buka: 08.00 - 18.00", "📍 Jl. Nagasari, West Karawang", "💰 Rp 10.000 - Rp. 20.000"],
+                address: "Jl. Ir. H. Juanda No.78, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 08.00 - 18.00", "📍 Jl. Ir. H. Juanda No.78", "💰 Rp 10.000 - Rp. 20.000"],
                 link: "sidomuncul.html"
             },
             {
@@ -524,6 +615,7 @@
                 icon: "🥪",
                 desc: "Warung simpel dengan cita rasa ibu",
                 category: "makanan",
+                address: "5 Jl. Arif Rahman Hakim, Karawang, Jawa Barat",
                 details: ["⏰ Buka: 06.30 - 21.00", "📍 5 Jl. Arif Rahman Hakim", "💰 Rp. 100 - Rp. 10.000"],
                 link : "warungdoaibu.html"
             },
@@ -532,6 +624,7 @@
                 icon: "🥯",
                 desc: "Donut dengan rasa yang lezat",
                 category: "makanan",
+                address: "78 Jl. Ir. H. Juanda, Karawang, Jawa Barat",
                 details: ["⏰ Buka: 10.00 - 17.00", "📍 78 Jl. Ir. H. Juanda", "💰 Rp. 2.500/pcs"],
                 link   : "sidotanguniita.html"
             },
@@ -540,6 +633,7 @@
                 icon: "🏪",
                 desc: "Toko sembako lengkap dan murah",
                 category: "barang",
+                address: "Jl. Rk. Sasta Kusumah, Karawang, Jawa Barat",
                 details: ["⏰ Buka: 08.00 - 17.00", "📍 Jl. Rk. Sasta Kusumah", "💰 Rp. 5.000 - Rp. 30.000"],
                 link: "tokorestuibu.html"
             },
@@ -548,7 +642,8 @@
                 icon: "🥤",
                 desc: "Minuman soda menyegarkan",
                 category: "makanan",
-                details: ["⏰ Buka: 09.00 - 17.00", "📍 62 Jl. Ir. H. Juanda", "💰 Mulai Rp 5.000"],
+                address: "60 Jl. Ir. H. Juanda, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 09.00 - 17.00", "📍 60 Jl. Ir. H. Juanda", "💰 Mulai Rp 5.000"],
                 link: "sodagembira.html"
             },
             {
@@ -556,6 +651,7 @@
                 icon: "🍗",
                 desc: "Nasi kebuli dengan ayam panggang spesial",
                 category: "makanan",
+                address: "31 Jl. Kertabumi, Karawang, Jawa Barat",
                 details: ["⏰ Buka: 09.00 - 20.00", "📍 31 Jl. Kertabumi", "💰 Rp 15.000 - Rp. 30.000"],
                 link: "nasikebuliayam.html"
             },
@@ -564,22 +660,25 @@
                 icon: "🍚",
                 desc: "Toko beras dengan berbagai pilihan kualitas terbaik",
                 category: "makanan",
+                address: "26 Jl. Belakang Ps. Karawang, Jawa Barat",
                 details: ["⏰ Buka: 08.00 - 17.00", "📍26 Jl. Belakang Ps.", "💰 Paket Rp 20.000 - Rp. 40.000"],
-                link: "tokoberaskaryapusaka.html"
+                link: "tokoberas.html"
             },
             {
                 name: "Toko Lidya",
                 icon: "🛍",
                 desc: "Toko perlengkapan rumah tangga lengkap",
                 category: "barang",
+                address: "26 Jl. Belakang Ps. Karawang, Jawa Barat",
                 details: ["⏰ Buka: 10.00 - 21.00", "📍 26 Jl. Belakang Ps.", "💰 Mulai Rp 5.000"],
                 link: "tokolidya.html"
             },
             {
-                name: "fotokopi lisa",
+                name: "Fotokopi Lisa",
                 icon: "🖨️",
                 desc: "Layanan fotokopi dan print cepat",
                 category: "jasa",
+                address: "57 Jl. Dewi Sartika, Karawang, Jawa Barat",
                 details: ["⏰ Buka: 07.30 - 18.00", "📍 57 Jl. Dewi Sartika", "💰 Rp. 500/lembar"],
                 link: "fotokopilisa.html"
             }
@@ -594,24 +693,20 @@
                 card.className = 'umkm-card';
                 card.style.animation = `fadeInUp 0.6s ease ${index * 0.1}s backwards`;
                 
+                const distanceText = umkm.distance ? `🚏 ${umkm.distance} dari Stasiun Karawang` : '🚏 Menghitung jarak...';
+                const updatedDetails = [...umkm.details, distanceText];
+                
                 card.innerHTML = `
                     <div class="umkm-image">${umkm.icon}</div>
                     <div class="umkm-content">
                         <h3>${umkm.name}</h3>
                         <p>${umkm.desc}</p>
                         <div class="umkm-details" id="details-${index}">
-                            ${umkm.details.map(detail => `<span class="detail-tag">${detail}</span>`).join('')}
+                            ${updatedDetails.map(detail => `<span class="detail-tag">${detail}</span>`).join('')}
                         </div>
-                        <button class="visit-btn" onclick="visitUMKM('${umkm.name}')">Kunjungi Sekarang</button>
+                        <button class="visit-btn" onclick="visitUMKM(${index})">Kunjungi Sekarang</button>
                     </div>
                 `;
-
-                card.addEventListener('click', function(e) {
-                    if (e.target.tagName !== 'BUTTON') {
-                        // Redirect to UMKM detail page
-                        window.location.href = `umkm-detail.html?id=${index}&name=${encodeURIComponent(umkm.name)}`;
-                    }
-                });
 
                 grid.appendChild(card);
             });
@@ -625,21 +720,12 @@
             }, 100);
         }
 
-        function visitUMKM(name) {
-            const umkm = umkmData.find(u => u.name === name);
-            function slugify(str) {
-            return str.toString().toLowerCase()
-                .normalize('NFKD') // separate diacritics
-                .replace(/[\u0300-\u036f]/g, '') // remove diacritics
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-            }
-
-            if (umkm) {
-            const link = umkm.link ? umkm.link : `${slugify(umkm.name)}.html`;
-            window.location.href = link;
+        function visitUMKM(index) {
+            const umkm = umkmData[index];
+            if (umkm && umkm.link) {
+                window.location.href = umkm.link;
             } else {
-            console.warn('UMKM not found:', name);
+                console.warn('UMKM link not found for index:', index);
             }
         }
 
@@ -650,6 +736,144 @@
         function openVideo() {
             alert('🎥 Video akan dibuka di tab baru!');
         }
+
+        // Search functionality
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        let searchActive = false;
+
+        // Toggle search bar
+        searchBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            searchActive = !searchActive;
+            
+            if (searchActive) {
+                searchInput.classList.add('active');
+                searchInput.focus();
+            } else {
+                searchInput.classList.remove('active');
+                searchInput.value = '';
+                searchResults.classList.remove('active');
+            }
+        });
+
+        // Handle search input
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            
+            if (query.length > 0) {
+                const results = umkmData.filter(umkm => 
+                    umkm.name.toLowerCase().includes(query) || 
+                    umkm.desc.toLowerCase().includes(query) ||
+                    umkm.category.toLowerCase().includes(query)
+                );
+                
+                displaySearchResults(results);
+            } else {
+                searchResults.classList.remove('active');
+            }
+        });
+
+        // Display search results
+        function displaySearchResults(results) {
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">Tidak ada hasil ditemukan</div>';
+            } else {
+                searchResults.innerHTML = results.map(umkm => `
+                    <div class="search-result-item" onclick="selectSearchResult('${umkm.name}')">
+                        <div class="search-result-name">${umkm.icon} ${umkm.name}</div>
+                        <div class="search-result-desc">${umkm.desc}</div>
+                    </div>
+                `).join('');
+            }
+            searchResults.classList.add('active');
+        }
+
+        // Select search result
+        function selectSearchResult(name) {
+            visitUMKM(name);
+            searchInput.classList.remove('active');
+            searchInput.value = '';
+            searchResults.classList.remove('active');
+            searchActive = false;
+        }
+
+        // Close search when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchInput.classList.remove('active');
+                searchResults.classList.remove('active');
+                searchInput.value = '';
+                searchActive = false;
+            }
+        });
+
+        // Prevent search results from closing when clicking inside
+        searchResults.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Google Maps Distance Matrix functionality
+        let mapsLoaded = false;
+        const stationOrigin = "Stasiun Karawang, Karawang, Jawa Barat";
+
+        function initMaps() {
+            mapsLoaded = true;
+            calculateAllDistances();
+        }
+
+        function calculateAllDistances() {
+            if (!mapsLoaded) return;
+
+            const service = new google.maps.DistanceMatrixService();
+            
+            umkmData.forEach((umkm, index) => {
+                service.getDistanceMatrix({
+                    origins: [stationOrigin],
+                    destinations: [umkm.address],
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.METRIC,
+                    avoidHighways: false,
+                    avoidTolls: false
+                }, function(response, status) {
+                    if (status === google.maps.DistanceMatrixStatus.OK) {
+                        const results = response.rows[0].elements;
+                        if (results[0].status === google.maps.DistanceMatrixElementStatus.OK) {
+                            const distance = results[0].distance.text;
+                            const duration = results[0].duration.text;
+                            umkm.distance = `${distance} (${duration})`;
+                            updateUMKMDistance(index, umkm.distance);
+                        }
+                    }
+                });
+            });
+        }
+
+        function updateUMKMDistance(index, distance) {
+            const detailElement = document.getElementById(`details-${index}`);
+            if (detailElement) {
+                const detailTags = detailElement.querySelectorAll('.detail-tag');
+                // Remove the loading text if it exists
+                if (detailTags.length > 0 && detailTags[detailTags.length - 1].textContent.includes('Menghitung jarak')) {
+                    detailTags[detailTags.length - 1].remove();
+                }
+                // Add the actual distance
+                const distanceTag = document.createElement('span');
+                distanceTag.className = 'detail-tag';
+                distanceTag.textContent = `🚏 ${distance} dari Stasiun Karawang`;
+                detailElement.appendChild(distanceTag);
+            }
+        }
+
+        // Initialize maps when window loads
+        window.onload = function() {
+            setTimeout(() => {
+                if (!mapsLoaded) {
+                    console.log('Google Maps loading...');
+                }
+            }, 2000);
+        };
 
         renderUMKM();
     </script>

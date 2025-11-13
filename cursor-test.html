@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor Trail Effect Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0a0a0a;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .test-container {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .instructions {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .status {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status.active {
+            border-color: #53bc28;
+            background: rgba(83, 188, 40, 0.1);
+        }
+
+        .status.inactive {
+            border-color: #ff008a;
+            background: rgba(255, 0, 138, 0.1);
+        }
+
+        .demo-area {
+            width: 80%;
+            max-width: 600px;
+            height: 200px;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .instructions {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🌟 Cursor Trail Effect Test</h1>
+        <div class="instructions">
+            <p>Move your mouse around to see the colorful trail effect!</p>
+            <p>Click anywhere to create a burst effect.</p>
+        </div>
+
+        <div class="demo-area">
+            Move your cursor here to test the effect
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="changeColors()">🎨 Change Colors</button>
+            <button class="btn" onclick="changeIntensity()">⚡ Change Intensity</button>
+            <button class="btn" onclick="toggleEffects()">🔄 Toggle Effects</button>
+            <button class="btn" onclick="testBurst()">💥 Test Burst</button>
+        </div>
+
+        <div id="status" class="status inactive">
+            <p>🔴 Cursor effects: Inactive</p>
+            <p>Move your mouse to activate</p>
+        </div>
+    </div>
+
+    <!-- Load the cursor trail script -->
+    <script src="cursor.js"></script>
+
+    <script>
+        // Status updates
+        let statusCheckInterval;
+
+        function updateStatus() {
+            const statusEl = document.getElementById('status');
+            const isActive = window.cursorTrail !== null;
+            
+            if (isActive) {
+                statusEl.className = 'status active';
+                statusEl.innerHTML = `
+                    <p>🟢 Cursor effects: Active</p>
+                    <p>Trail count: ${window.cursorTrail ? window.cursorTrail.trails.length : 0}</p>
+                    <p>Move your mouse to see trails!</p>
+                `;
+            } else {
+                statusEl.className = 'status inactive';
+                statusEl.innerHTML = `
+                    <p>🔴 Cursor effects: Inactive</p>
+                    <p>Move your mouse to activate</p>
+                `;
+            }
+        }
+
+        // Control functions
+        function changeColors() {
+            const colorSets = [
+                ['#f967fb', '#53bc28', '#6958d5'],
+                ['#ff6b6b', '#4ecdc4', '#45b7d1'],
+                ['#f7b731', '#5f27cd', '#00d2d3'],
+                ['#ff9ff3', '#feca57', '#48dbfb'],
+                ['#ee5a24', '#f79f1f', '#a29bfe']
+            ];
+            
+            const randomSet = colorSets[Math.floor(Math.random() * colorSets.length)];
+            
+            if (window.app && window.app.tubes) {
+                window.app.tubes.setColors(randomSet);
+                console.log('Colors changed to:', randomSet);
+            }
+        }
+
+        function changeIntensity() {
+            const intensities = [10, 20, 30, 40, 50];
+            const randomIntensity = intensities[Math.floor(Math.random() * intensities.length)];
+            
+            if (window.app && window.app.tubes) {
+                window.app.tubes.setIntensity(randomIntensity);
+                console.log('Intensity changed to:', randomIntensity);
+            }
+        }
+
+        function toggleEffects() {
+            if (window.app && window.app.toggleEffects) {
+                window.app.toggleEffects();
+                console.log('Effects toggled');
+            }
+        }
+
+        function testBurst() {
+            if (window.cursorTrail) {
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                window.cursorTrail.createClickBurst(centerX, centerY);
+                console.log('Burst effect triggered at center');
+            }
+        }
+
+        // Initialize status checking
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                updateStatus();
+                statusCheckInterval = setInterval(updateStatus, 1000);
+            }, 1000);
+        });
+
+        // Handle visibility changes
+        document.addEventListener('visibilitychange', () => {
+            setTimeout(updateStatus, 500);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'c':
+                case 'C':
+                    changeColors();
+                    break;
+                case 'i':
+                case 'I':
+                    changeIntensity();
+                    break;
+                case 't':
+                case 'T':
+                    toggleEffects();
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    testBurst();
+                    break;
+            }
+        });
+
+        // Log instructions
+        console.log('🌟 Cursor Trail Test Page Loaded!');
+        console.log('Keyboard shortcuts:');
+        console.log('C - Change colors');
+        console.log('I - Change intensity');
+        console.log('T - Toggle effects');
+        console.log('Space - Test burst effect');
+    </script>
+</body>
+</html>
