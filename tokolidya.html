@@ -1,0 +1,737 @@
+<!DOCTYPE html> #InthenameofJesus
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail UMKM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.7rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+            transform: translateX(-5px);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-icon {
+            font-size: 10rem;
+            text-align: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-info h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-info p {
+            font-size: 1.2rem;
+            color: #aaa;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-tags {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.2rem;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 25px;
+            font-size: 0.95rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Description */
+        .description-content {
+            line-height: 1.8;
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        /* Location */
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .map-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .map-placeholder {
+            text-align: center;
+            color: #667eea;
+        }
+
+        .address-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .address-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .address-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .address-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .directions-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .directions-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Photo Gallery */
+        .gallery-header {
+            margin-bottom: 2rem;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .photo-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover .photo-img {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 1rem;
+            color: white;
+        }
+
+        .photo-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .photo-desc {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Contact Section */
+        .contact-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.05rem;
+        }
+
+        .contact-btn.whatsapp:hover {
+            background: #25D366;
+            border-color: #25D366;
+            transform: translateY(-5px);
+        }
+
+        .contact-btn.phone:hover {
+            background: #667eea;
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .contact-btn.instagram:hover {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            border-color: #e6683c;
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+            .hero-icon {
+                font-size: 6rem;
+            }
+            .hero-info h1 {
+                font-size: 2rem;
+            }
+            .location-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="javascript:history.back()" class="back-btn">
+            ← Kembali
+        </a>
+        <div class="logo-section">
+            <div class="logo">🏪</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-icon" id="heroIcon">🛍</div>
+            <div class="hero-info">
+                <h1 id="umkmName">Toko Lidya</h1>
+                <p id="umkmDesc">Toko perlengkapan rumah tangga lengkap</p>
+                <div class="info-tags">
+                    <span class="tag">⏰ 10.00 - 21.00</span>
+                    <span class="tag">💰 Rp 5.000 - Rp 20.000</span>
+                    <span class="tag">🛍 Barang</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Description Section -->
+        <div class="section">
+            <h2>📝 Tentang UMKM Ini</h2>
+            <div class="description-content" id="description">
+                <p>Toko Lidya</p>
+                
+                <div class="highlight">
+                    <strong>🌟 Keunggulan:</strong>
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem; line-height: 2;">
+                        <li>Barang lengkap</li>
+                        <li>Buka setiap hari</li>
+                        <li>Tempat bersih dan nyaman</li>
+                        <li>Harga terjangkau</li>
+                        <li>Lokasi strategis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location Section -->
+        <div class="section">
+            <h2>📍 Lokasi & Alamat</h2>
+            <div class="location-grid">
+                <div class="map-container">
+                    <div class="map-placeholder">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.6668247088187!2d107.29417716016651!3d-6.307429493655459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6977d92986f5d3%3A0xddaf980fc1c4d695!2sJl.%20Belakang%20Ps.%20No.26%2C%20Nagasari%2C%20Kec.%20Karawang%20Bar.%2C%20Karawang%2C%20Jawa%20Barat%2041312!5e0!3m2!1sen!2sid!4v1763016731950!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                    </div>
+                </div>
+                <div class="address-info">
+                    <div class="address-item">
+                        <div class="address-icon">📍</div>
+                        <div>
+                            <strong>Alamat Lengkap</strong>
+                            <p style="color: #aaa; margin-top: 0.3rem;">Jl. Belakang Ps. No.26</p>
+                        </div>
+                    </div>
+                    <div class="address-item">
+                        <div class="address-icon">🚶</div>
+                        <div>
+                            <strong>Jarak dari Stasiun KRW</strong>
+                            <p style="color: #aaa; margin-top: 0.3rem;">± 1 kilometer (14 menit jalan kaki)</p>
+                        </div>
+                    </div>
+                    <div class="address-item">
+                        <div class="address-icon">🅿️</div>
+                        <div>
+                            <strong>Parkir</strong>
+                            <p style="color: #aaa; margin-top: 0.3rem;">Tersedia parkir sepeda & motor gratis</p>
+                        </div>
+                    </div>
+                    <button class="directions-btn" onclick="location.href='https://maps.app.goo.gl/2XN9SJqsMVQDeCR2A'">
+                        🧭 Petunjuk Arah
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo Gallery Section -->
+        <div class="section">
+            <h2>📸 Galeri Foto</h2>
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="../main stuff/gambar/tokolidya.jpeg" alt="Produk 1" class="photo-img">
+                    <div class="photo-overlay">
+                        <div class="photo-title">Tampilan utama toko</div>
+                        <div class="photo-desc">Spanduk toko yang minimalis</div>
+                    </div>
+                </div>
+                <div class="photo-item">
+                    <img src="../main stuff/gambar/toklidya.png" alt="Produk 2" class="photo-img">
+                    <div class="photo-overlay">
+                        <div class="photo-title">Tampilan toko</div>
+                        <div class="photo-desc">Tempat nyaman dan </div>
+                    </div>
+                </div>
+                <div class="photo-item">
+                    <img src="../main stuff/gambar/lidya.png" alt="Produk 3" class="photo-img">
+                    <div class="photo-overlay">
+                        <div class="photo-title">Tampilan dalam toko</div>
+                        <div class="photo-desc">Suasana toko yang nyaman dan bersih</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="section">
+            <h2>📞 Hubungi UMKM</h2>
+            <div class="contact-buttons">
+                <a href="#" class="contact-btn whatsapp" onclick="contactWhatsApp(); return false;">
+                    💬 WhatsApp
+                </a>
+                <a href="tel:+628123456789" class="contact-btn phone">
+                    📞 Telepon
+                </a>
+                <a href="#" class="contact-btn instagram" onclick="contactInstagram(); return false;">
+                    📸 Instagram
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const umkmDatabase = [
+            {
+                name: "Warung Makan Bu Siti",
+                icon: "🍜",
+                desc: "Menyajikan makanan tradisional dengan cita rasa autentik dan bumbu racikan turun temurun",
+                category: "Kuliner",
+                hours: "07.00 - 20.00",
+                price: "Rp 10.000 - 25.000",
+                address: "Jl. Pendidikan No. 12, Karawang Barat",
+                distance: "200 meter (3 menit jalan kaki)",
+                description: "Warung Makan Bu Siti telah berdiri sejak tahun 2010 dan menjadi favorit para pelajar dan guru di sekitar sekolah. Dengan menu andalan nasi goreng spesial, soto ayam, dan berbagai lauk pauk tradisional, warung ini selalu ramai dikunjungi terutama saat jam istirahat.",
+                features: ["Porsi besar dengan harga terjangkau", "Bahan segar setiap hari", "Tempat bersih dan nyaman", "Tersedia paket hemat untuk pelajar", "Bisa pesan antar untuk rombongan"],
+                rating: 4.8,
+                reviewCount: 127
+            },
+            {
+                name: "Toko Buku Cerdas",
+                icon: "📚",
+                desc: "Toko buku lengkap dengan berbagai alat tulis dan buku pelajaran untuk semua tingkat",
+                category: "Pendidikan",
+                hours: "08.00 - 18.00",
+                price: "Diskon 10% untuk pelajar",
+                address: "Jl. Ilmu No. 5, Karawang Barat",
+                distance: "150 meter (2 menit jalan kaki)",
+                description: "Toko Buku Cerdas menyediakan berbagai kebutuhan sekolah mulai dari buku pelajaran, novel, alat tulis, hingga perlengkapan sekolah lainnya. Dengan stok yang selalu update dan harga terjangkau, toko ini menjadi pilihan utama para pelajar.",
+                features: ["Buku pelajaran lengkap semua mata pelajaran", "Diskon khusus untuk pembelian rombongan", "Program tukar buku bekas", "Alat tulis branded dan lokal", "Pelayanan ramah dan konsultasi gratis"],
+                rating: 4.7,
+                reviewCount: 89
+            },
+            {
+                name: "Fotokopi & Print Kilat",
+                icon: "🖨️",
+                desc: "Layanan fotokopi, print, scan, dan jilid cepat dengan kualitas terbaik",
+                category: "Jasa",
+                hours: "06.30 - 21.00",
+                price: "Print mulai Rp 300/lembar",
+                address: "Depan Gerbang Sekolah, Karawang",
+                distance: "50 meter (1 menit jalan kaki)",
+                description: "Fotokopi & Print Kilat beroperasi sejak pagi hingga malam untuk memenuhi kebutuhan printing para pelajar. Dengan mesin modern dan operator berpengalaman, hasil print dijamin memuaskan.",
+                features: ["Buka dari pagi hingga malam", "Harga murah dan kompetitif", "Hasil berkualitas tinggi", "Bisa edit dokumen sederhana", "Layanan express untuk keperluan mendesak"],
+                rating: 4.9,
+                reviewCount: 203
+            },
+            {
+                name: "Kedai Kopi Pelajar",
+                icon: "☕",
+                desc: "Tempat hangout asik dengan WiFi gratis, minuman kopi, dan suasana nyaman",
+                category: "Kuliner",
+                hours: "09.00 - 22.00",
+                price: "Kopi mulai Rp 8.000",
+                address: "Jl. Merdeka No. 18, Karawang Barat",
+                distance: "300 meter (5 menit jalan kaki)",
+                description: "Kedai Kopi Pelajar adalah tempat favorit untuk mengerjakan tugas, diskusi kelompok, atau sekadar bersantai. Dengan WiFi gratis unlimited, colokan listrik di setiap meja, dan menu minuman yang variatif.",
+                features: ["WiFi gratis unlimited", "Colokan listrik di setiap meja", "Menu minuman dan snack lengkap", "Ruang diskusi nyaman", "Background music santai untuk belajar"],
+                rating: 4.6,
+                reviewCount: 156
+            },
+            {
+                name: "Laundry Express",
+                icon: "👕",
+                desc: "Jasa laundry kilat untuk seragam dan pakaian sehari-hari dengan harga terjangkau",
+                category: "Jasa",
+                hours: "07.00 - 20.00",
+                price: "Rp 5.000/kg (cuci reguler)",
+                address: "Jl. Bersih No. 9, Karawang Barat",
+                distance: "250 meter (4 menit jalan kaki)",
+                description: "Laundry Express melayani cuci kilat dengan kualitas bersih maksimal. Cocok untuk pelajar yang sibuk dan tidak sempat mencuci sendiri. Tersedia layanan antar-jemput gratis untuk area sekitar sekolah.",
+                features: ["Cuci kilat 3-6 jam", "Parfum pewangi pilihan", "Setrika rapi dan wangi", "Antar-jemput gratis area sekolah", "Harga spesial untuk paket langganan"],
+                rating: 4.7,
+                reviewCount: 95
+            },
+            {
+                name: "Toko Sepatu & Tas",
+                icon: "👟",
+                desc: "Menjual sepatu sekolah, tas, dan aksesoris dengan kualitas premium",
+                category: "Pendidikan",
+                hours: "08.00 - 19.00",
+                price: "Harga mulai Rp 75.000",
+                address: "Jl. Fashion No. 21, Karawang Barat",
+                distance: "400 meter (6 menit jalan kaki)",
+                description: "Toko Sepatu & Tas menyediakan berbagai model sepatu sekolah, sepatu olahraga, tas sekolah, dan tas olahraga dengan kualitas terjamin. Semua produk bergaransi dan tersedia dalam berbagai ukuran.",
+                features: ["Produk bergaransi resmi", "Tersedia semua ukuran", "Bisa custom untuk model tertentu", "Konsultasi gratis pemilihan produk", "Program trade-in sepatu lama"],
+                rating: 4.5,
+                reviewCount: 72
+            },
+            {
+                name: "Barbershop Keren",
+                icon: "💈",
+                desc: "Pangkas rambut stylish untuk pelajar dengan tukang cukur berpengalaman",
+                category: "Jasa",
+                hours: "09.00 - 20.00",
+                price: "Rp 15.000 - 30.000",
+                address: "Jl. Gaya No. 7, Karawang Barat",
+                distance: "180 meter (3 menit jalan kaki)",
+                description: "Barbershop Keren melayani potong rambut dengan berbagai model, dari model standar sekolah hingga model trendy. Dengan barber profesional dan peralatan modern, hasil potongan dijamin rapi dan sesuai keinginan.",
+                features: ["Barber berpengalaman dan profesional", "Model potongan up-to-date", "Ruang ber-AC dan bersih", "Konsultasi model gratis", "Loyalty card untuk pelanggan tetap"],
+                rating: 4.8,
+                reviewCount: 134
+            },
+            {
+                name: "Toko Seragam Sekolah",
+                icon: "🎽",
+                desc: "Pusat seragam sekolah lengkap dengan kualitas bahan terbaik dan harga terjangkau",
+                category: "Pendidikan",
+                hours: "08.00 - 17.00",
+                price: "Paket lengkap Rp 200.000",
+                address: "Jl. Seragam No. 3, Karawang Barat",
+                distance: "220 meter (3 menit jalan kaki)",
+                description: "Toko Seragam Sekolah menjual seragam lengkap mulai dari baju, celana/rok, dasi, topi, hingga kaos kaki. Bahan berkualitas, jahitan rapi, dan harga terjangkau. Tersedia juga jasa jahit custom untuk ukuran khusus.",
+                features: ["Bahan berkualitas tahan lama", "Jahitan rapi dan kuat", "Tersedia semua ukuran", "Jasa jahit custom", "Garansi tukar jika tidak pas"],
+                rating: 4.6,
+                reviewCount: 68
+            },
+            {
+                name: "Warung Es & Jajanan",
+                icon: "🍧",
+                desc: "Aneka es segar dan jajanan tradisional yang enak dan murah meriah",
+                category: "Kuliner",
+                hours: "10.00 - 21.00",
+                price: "Mulai Rp 5.000",
+                address: "Samping Lapangan Sekolah, Karawang",
+                distance: "100 meter (2 menit jalan kaki)",
+                description: "Warung Es & Jajanan menyajikan berbagai es segar seperti es campur, es buah, es teh manis, dan jajanan tradisional. Tempat favorit untuk melepas dahaga setelah olahraga atau di siang hari yang panas.",
+                features: ["Es segar dengan buah asli", "Jajanan tradisional lengkap", "Harga terjangkau kantong pelajar", "Porsi melimpah", "Tempat duduk nyaman"],
+                rating: 4.7,
+                reviewCount: 142
+            },
+            {
+                name: "Bengkel Sepeda",
+                icon: "🚲",
+                desc: "Service dan perbaikan sepeda cepat dengan teknisi handal dan harga murah",
+                category: "Jasa",
+                hours: "07.00 - 18.00",
+                price: "Service mulai Rp 10.000",
+                address: "Jl. Roda No. 15, Karawang Barat",
+                distance: "280 meter (4 menit jalan kaki)",
+                description: "Bengkel Sepeda melayani service rutin, perbaikan, dan modifikasi sepeda. Dengan teknisi berpengalaman dan spare part lengkap, sepeda Anda akan kembali seperti baru.",
+                features: ["Teknisi berpengalaman 10+ tahun", "Spare part original dan kw", "Service cepat 30 menit", "Harga transparan", "Garansi perbaikan 1 minggu"],
+                rating: 4.9,
+                reviewCount: 88
+            }
+        ];
+
+
+
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const umkmId = parseInt(urlParams.get('id')) || 0;
+        const umkm = umkmDatabase[umkmId];
+
+        // Update page content
+        if (umkm) {
+            document.getElementById('heroIcon').textContent = umkm.icon;
+            document.getElementById('umkmName').textContent = umkm.name;
+            document.getElementById('umkmDesc').textContent = umkm.desc;
+            document.title = `${umkm.name} - Detail UMKM`;
+
+            // Update info tags
+            const infoTags = document.querySelector('.info-tags');
+            infoTags.innerHTML = `
+                <span class="tag">⏰ ${umkm.hours}</span>
+                <span class="tag">💰 ${umkm.price}</span>
+                <span class="tag">🏷️ ${umkm.category}</span>
+            `;
+
+            // Update description
+            const descContainer = document.getElementById('description');
+            descContainer.innerHTML = `
+                <p>${umkm.description}</p>
+                <div class="highlight">
+                    <strong>🌟 Keunggulan:</strong>
+                    <ul style="margin-top: 0.5rem; margin-left: 1.5rem; line-height: 2;">
+                        ${umkm.features.map(feature => `<li>${feature}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            // Update address info
+            const addressInfo = document.querySelector('.address-info');
+            addressInfo.innerHTML = `
+                <div class="address-item">
+                    <div class="address-icon">📍</div>
+                    <div>
+                        <strong>Alamat Lengkap</strong>
+                        <p style="color: #aaa; margin-top: 0.3rem;">${umkm.address}, Karawang, Jawa Barat 41311</p>
+                    </div>
+                </div>
+                <div class="address-item">
+                    <div class="address-icon">🚶</div>
+                    <div>
+                        <strong>Jarak dari Sekolah</strong>
+                        <p style="color: #aaa; margin-top: 0.3rem;">± ${umkm.distance}</p>
+                    </div>
+                </div>
+                <div class="address-item">
+                    <div class="address-icon">🅿️</div>
+                    <div>
+                        <strong>Parkir</strong>
+                        <p style="color: #aaa; margin-top: 0.3rem;">Tersedia parkir sepeda & motor gratis</p>
+                    </div>
+                </div>
+                <button class="directions-btn" onclick="openMaps()">
+                    🧭 Petunjuk Arah
+                </button>
+            `;
+
+            // Update rating
+            const ratingNumber = document.querySelector('.rating-number');
+            const reviewCount = document.querySelector('.rating-summary p');
+            ratingNumber.textContent = umkm.rating;
+            reviewCount.textContent = `Dari ${umkm.reviewCount} ulasan`;
+        }
+
+
+
+        function openMaps() {
+            const umkm = umkmDatabase[umkmId];
+            alert(`🗺️ Membuka Google Maps untuk navigasi ke ${umkm.name}...`);
+            // In real implementation:
+            // window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(umkm.address)}`, '_blank');
+        }
+
+        function contactWhatsApp() {
+            alert('💬 Menghubungkan ke WhatsApp...\n\nNomor: 0812-3456-7890');
+            // In real implementation:
+            // window.open('https://wa.me/628123456789', '_blank');
+        }
+
+        function contactInstagram() {
+            const umkm = umkmDatabase[umkmId];
+            alert(`📸 Membuka Instagram ${umkm.name}...`);
+            // In real implementation:
+            // window.open('https://instagram.com/warungbusiti', '_blank');
+        }
+
+        // Initialize
+        loadReviews()
