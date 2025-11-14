@@ -251,128 +251,63 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
-        /* Reviews */
-        .reviews-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Photo Gallery */
+        .gallery-header {
             margin-bottom: 2rem;
         }
 
-        .rating-summary {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
 
-        .rating-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .stars {
-            font-size: 1.5rem;
-            color: #ffd700;
-        }
-
-        .add-review-btn {
-            padding: 0.8rem 1.5rem;
-            background: rgba(102, 126, 234, 0.2);
-            border: 1px solid #667eea;
-            border-radius: 25px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .add-review-btn:hover {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .review-card {
+        .photo-item {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .review-card:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: #667eea;
-            transform: translateX(5px);
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .reviewer-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .reviewer-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .reviewer-name {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .review-date {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        .review-stars {
-            color: #ffd700;
-        }
-
-        .review-text {
-            color: #ccc;
-            line-height: 1.6;
-            margin-top: 0.5rem;
-        }
-
-        .review-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .action-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            color: #aaa;
+            overflow: hidden;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 0.9rem;
+            position: relative;
         }
 
-        .action-btn:hover {
-            background: rgba(102, 126, 234, 0.2);
+        .photo-item:hover {
+            transform: translateY(-5px);
             border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover .photo-img {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 1rem;
             color: white;
+        }
+
+        .photo-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .photo-desc {
+            font-size: 0.9rem;
+            color: #ccc;
         }
 
         /* Contact Section */
@@ -452,7 +387,7 @@
                 <p id="umkmDesc">Toko perlengkapan rumah tangga lengkap</p>
                 <div class="info-tags">
                     <span class="tag">⏰ 10.00 - 21.00</span>
-                    <span class="tag">💰 Rp 5.000</span>
+                    <span class="tag">💰 Rp 5.000 - Rp 20.000</span>
                     <span class="tag">🛍 Barang</span>
                 </div>
             </div>
@@ -486,15 +421,14 @@
             <div class="location-grid">
                 <div class="map-container">
                     <div class="map-placeholder">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.6668247088187!2d107.29417716016651!3d-6.307429493655459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6977d92986f5d3%3A0xddaf980fc1c4d695!2sJl.%20Belakang%20Ps.%20No.26%2C%20Nagasari%2C%20Kec.%20Karawang%20Bar.%2C%20Karawang%2C%20Jawa%20Barat%2041312!5e0!3m2!1sen!2sid!4v1763016731950!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.6668247088187!2d107.29417716016651!3d-6.307429493655459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6977d92986f5d3%3A0xddaf980fc1c4d695!2sJl.%20Belakang%20Ps.%20No.26%2C%20Nagasari%2C%20Kec.%20Karawang%20Bar.%2C%20Karawang%2C%20Jawa%20Barat%2041312!5e0!3m2!1sen!2sid!4v1763016731950!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                    </div>
                 </div>
                 <div class="address-info">
                     <div class="address-item">
                         <div class="address-icon">📍</div>
                         <div>
                             <strong>Alamat Lengkap</strong>
-                            <p style="color: #aaa; margin-top: 0.3rem;">Jl. Belakang ps no. 26</p>
+                            <p style="color: #aaa; margin-top: 0.3rem;">Jl. Belakang Ps. No.26</p>
                         </div>
                     </div>
                     <div class="address-item">
@@ -518,24 +452,31 @@
             </div>
         </div>
 
-        <!-- Reviews Section -->
+        <!-- Photo Gallery Section -->
         <div class="section">
-            <div class="reviews-header">
-                <div>
-                    <h2>⭐ Ulasan & Rating</h2>
-                    <div class="rating-summary">
-                        <div class="rating-number">4.8</div>
-                        <div>
-                            <div class="stars">★★★★★</div>
-                            <p style="color: #888; font-size: 0.9rem; margin-top: 0.3rem;">Dari 127 ulasan</p>
-                        </div>
+            <h2>📸 Galeri Foto</h2>
+            <div class="photo-gallery">
+                <div class="photo-item">
+                    <img src="../main stuff/gambar/tokolidya.jpeg" alt="Produk 1" class="photo-img">
+                    <div class="photo-overlay">
+                        <div class="photo-title">Tampilan utama toko</div>
+                        <div class="photo-desc">Spanduk toko yang minimalis</div>
                     </div>
                 </div>
-                <button class="add-review-btn" onclick="addReview()">✍️ Tulis Ulasan</button>
-            </div>
-
-            <div id="reviewsContainer">
-                <!-- Reviews will be loaded here -->
+                <div class="photo-item">
+                    <img src="../main stuff/gambar/toklidya.png" alt="Produk 2" class="photo-img">
+                    <div class="photo-overlay">
+                        <div class="photo-title">Tampilan toko</div>
+                        <div class="photo-desc">Tempat nyaman dan </div>
+                    </div>
+                </div>
+                <div class="photo-item">
+                    <img src="../main stuff/gambar/lidya.png" alt="Produk 3" class="photo-img">
+                    <div class="photo-overlay">
+                        <div class="photo-title">Tampilan dalam toko</div>
+                        <div class="photo-desc">Suasana toko yang nyaman dan bersih</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -700,53 +641,7 @@
             }
         ];
 
-        const reviewsData = [
-            {
-                name: "Ahmad Rizki",
-                avatar: "👨",
-                rating: 5,
-                date: "2 hari yang lalu",
-                text: "Makanannya enak banget! Porsi besar, harga murah. Soto ayamnya juara, bumbu meresap sempurna. Tempatnya juga bersih dan nyaman. Recommended banget buat yang cari makan enak di sekitar sekolah!",
-                likes: 24,
-                helpful: 18
-            },
-            {
-                name: "Siti Nurhaliza",
-                avatar: "👩",
-                rating: 5,
-                date: "5 hari yang lalu",
-                text: "Udah langganan dari kelas 10, sekarang kelas 12 masih setia ke sini. Bu Siti orangnya ramah, pelayanan cepat. Nasi goreng spesialnya mantap!",
-                likes: 19,
-                helpful: 15
-            },
-            {
-                name: "Budi Santoso",
-                avatar: "👨",
-                rating: 4,
-                date: "1 minggu yang lalu",
-                text: "Overall bagus sih, cuma kadang pas jam istirahat agak antri panjang. Tapi worth it kok, rasanya memang enak. Saran aja mungkin bisa nambah pegawai.",
-                likes: 12,
-                helpful: 10
-            },
-            {
-                name: "Dewi Lestari",
-                avatar: "👩",
-                rating: 5,
-                date: "2 minggu yang lalu",
-                text: "Tempat favorit buat makan siang! Menu variatif, setiap hari ada menu berbeda. Paket hemat pelajar sangat membantu. Tempatnya juga dekat dari sekolah, tinggal jalan kaki aja.",
-                likes: 31,
-                helpful: 22
-            },
-            {
-                name: "Eko Prasetyo",
-                avatar: "👨",
-                rating: 5,
-                date: "3 minggu yang lalu",
-                text: "Bisa pesan antar untuk rombongan itu sangat membantu banget pas ada acara kelas. Makanannya tetap anget dan enak sampai lokasi. Terima kasih Bu Siti!",
-                likes: 15,
-                helpful: 12
-            }
-        ];
+
 
         // Get URL parameters
         const urlParams = new URLSearchParams(window.location.search);
@@ -816,68 +711,7 @@
             reviewCount.textContent = `Dari ${umkm.reviewCount} ulasan`;
         }
 
-        // Load reviews
-        function loadReviews() {
-            const container = document.getElementById('reviewsContainer');
-            container.innerHTML = reviewsData.map((review, index) => `
-                <div class="review-card" style="animation: fadeInUp 0.6s ease ${index * 0.1}s backwards;">
-                    <div class="review-header">
-                        <div class="reviewer-info">
-                            <div class="reviewer-avatar">${review.avatar}</div>
-                            <div>
-                                <div class="reviewer-name">${review.name}</div>
-                                <div class="review-date">${review.date}</div>
-                            </div>
-                        </div>
-                        <div class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
-                    </div>
-                    <div class="review-text">${review.text}</div>
-                    <div class="review-actions">
-                        <button class="action-btn" onclick="likeReview(${index})">
-                            👍 Suka (${review.likes})
-                        </button>
-                        <button class="action-btn" onclick="helpfulReview(${index})">
-                            ✓ Membantu (${review.helpful})
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
 
-        function likeReview(index) {
-            reviewsData[index].likes++;
-            loadReviews();
-        }
-
-        function helpfulReview(index) {
-            reviewsData[index].helpful++;
-            loadReviews();
-        }
-
-        function addReview() {
-            const name = prompt('Nama Anda:');
-            if (!name) return;
-            
-            const rating = parseInt(prompt('Rating (1-5):'));
-            if (!rating || rating < 1 || rating > 5) return;
-            
-            const text = prompt('Tulis ulasan Anda:');
-            if (!text) return;
-
-            const newReview = {
-                name: name,
-                avatar: name[0].toUpperCase(),
-                rating: rating,
-                date: 'Baru saja',
-                text: text,
-                likes: 0,
-                helpful: 0
-            };
-
-            reviewsData.unshift(newReview);
-            loadReviews();
-            alert('Terima kasih atas ulasan Anda! 🎉');
-        }
 
         function openMaps() {
             const umkm = umkmDatabase[umkmId];
