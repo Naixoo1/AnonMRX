@@ -65,7 +65,7 @@ const HomePage = () => {
         link: "sodagembira.html"
       },
       {
-        name: "Nasi Kebuli & Ayam panggang",
+        name: "Nasi Kebuli & Ayam Panggang",
         icon: "🍗",
         desc: "Nasi kebuli dengan ayam panggang spesial",
         category: "makanan",
@@ -84,7 +84,7 @@ const HomePage = () => {
       },
       {
         name: "Toko Lidya",
-        icon: "🛍",
+        icon: "🛍️",
         desc: "Toko perlengkapan rumah tangga lengkap",
         category: "barang",
         address: "26 Jl. Belakang Ps. Karawang, Jawa Barat",
@@ -166,12 +166,6 @@ const HomePage = () => {
         <div className="umkm-content">
           <h3>{umkm.name}</h3>
           <p>{umkm.desc}</p>
-          <div className="umkm-details" id={`details-${index}`}>
-            {umkm.details.map((detail, idx) => (
-              <span key={idx} className="detail-tag">{detail}</span>
-            ))}
-            <span className="detail-tag">{umkm.distance}</span>
-          </div>
           <button className="visit-btn" onClick={() => visitUMKM(index)}>
             Kunjungi Sekarang
           </button>
