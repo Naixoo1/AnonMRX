@@ -1,0 +1,881 @@
+<!DOCTYPE html> #InTheNameOfJesus #canggih #rispek all 
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMKM KARAWANG</title>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places&callback=initMaps"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', Inter, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .school-info h1 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .school-info p {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 0;
+            padding: 0;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-input.active {
+            width: 200px;
+            padding: 0.5rem 1rem;
+            opacity: 1;
+            margin-right: 0.5rem;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            min-width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .search-result-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .search-result-desc {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .no-results {
+            padding: 1rem;
+            text-align: center;
+            color: #888;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 0;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.4);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(10,10,10,0.9));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #888;
+        }
+
+        /* Category Cards */
+        .category-section {
+            margin-bottom: 4rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            border-color: #667eea;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .category-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .category-card p {
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* UMKM Grid  */
+        .umkm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .umkm-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .umkm-card:hover {
+            transform: translateY(-10px);
+            border-color: #667eea;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .umkm-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            transition: transform 0.3s;
+        }
+
+        .umkm-card:hover .umkm-image {
+            transform: scale(1.1);
+        }
+
+        .umkm-content {
+            padding: 1.5rem;
+        }
+
+        .umkm-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
+        }
+
+        .umkm-content p {
+            color: #888;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .umkm-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .umkm-details.active {
+            max-height: 300px;
+        }
+
+        .detail-tag {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.3rem;
+            font-size: 0.9rem;
+            color: #b8c5ff;
+        }
+
+        .visit-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .visit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Video Section */
+        .video-section {
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .video-card:hover {
+            border-color: #ff0000;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            .nav-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigasi --> 
+    <nav class="navbar">
+        <div class="logo-section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Logo_Kementerian_Usaha_Mikro%2C_Kecil%2C_dan_Menengah_Republik_Indonesia_%282025%29.svg/1200px-Logo_Kementerian_Usaha_Mikro%2C_Kecil%2C_dan_Menengah_Republik_Indonesia_%282025%29.svg.png" 
+            alt="Logo" class="logo">
+            <div class="school-info">
+                <h1>UMKM KARAWANG</h1>
+                <p>UMKM sekitar Karawang</p>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#home">🏠 Beranda</a></li>
+            <li><a href="#umkm">🏪 UMKM</a></li>
+            <li><a href="#kategori">📋 Kategori</a></li>
+            <li><a href="#kontak">📞 Kontak</a></li>
+        </ul>
+        <div class="nav-icons">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Cari UMKM..." id="searchInput">
+                <div class="icon-btn" id="searchBtn">🔎</div>
+                <div class="search-results" id="searchResults"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="https://cdn.pixabay.com/video/2022/04/01/112805-694771488_large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">UMKM KARAWANG</h1>
+            <p class="hero-subtitle">Selamat Datang Di Website UMKM KRW!</p>
+            <button class="hero-cta" onclick="scrollToUMKM()">
+                Lihat UMKM →
+            </button>
+        </div>
+        <div class="scroll-indicator">⬇️</div>
+    </section>
+
+        <!-- kategori stuff -->
+        <section class="category-section" id="kategori">
+            <div class="section-header">
+                <h2>Kategori UMKM</h2>
+                <p>berbagai UMKM disekitar Karawang</p>
+            </div>
+            <div class="category-grid">
+                <div class="category-card" onclick="filterCategory('makanan')">
+                    <div class="category-icon">🍜</div>
+                    <h3>Kuliner</h3>
+                    <p>Makanan & Minuman</p>
+                </div>
+                <div class="category-card" onclick="filterCategory('barang')">
+                    <div class="category-icon">📚</div>
+                    <h3>Produk</h3>
+                    <p>Barang sehari hari</p>
+                </div>
+                <div class="category-card" onclick="filterCategory('jasa')">
+                    <div class="category-icon">⚙️</div>
+                    <h3>Jasa</h3>
+                    <p>Layanan & Service</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- UMKM Grid -->
+        <section id="umkm">
+            <div class="section-header">
+                <h2>10 UMKM Pilihan</h2>
+                <p>Dukung bisnis lokal di sekitar Kota Karawang</p>
+            </div>
+            <div class="umkm-grid" id="umkmGrid"></div>
+        </section>
+    </div>
+
+    <script>
+        const umkmData = [
+            {
+                name: "Waffle Cone",
+                icon: "🍦",
+                desc: "Ice Cream lezat dengan side dish unik",
+                category: "makanan",
+                address: "Jl. Kertabumi no. 34, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 08.00 - 17.00", "📍 Jl. Kertabumi no. 34", "💰 Rp 10.000 - Rp. 25.000"],
+                link: "wafflecone.html"
+            },
+            {
+                name: "SidoMuncul",
+                icon: "🍷",
+                desc: "Herbal tradisional untuk kesehatan Anda",
+                category: "makanan",
+                address: "Jl. Ir. H. Juanda No.78, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 08.00 - 18.00", "📍 Jl. Ir. H. Juanda No.78", "💰 Rp 10.000 - Rp. 20.000"],
+                link: "sidomuncul.html"
+            },
+            {
+                name: "Warung Doa Ibu",
+                icon: "🥪",
+                desc: "Warung simpel dengan cita rasa ibu",
+                category: "makanan",
+                address: "5 Jl. Arif Rahman Hakim, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 06.30 - 21.00", "📍 5 Jl. Arif Rahman Hakim", "💰 Rp. 100 - Rp. 10.000"],
+                link : "warungdoaibu.html"
+            },
+            {
+                name: "Si Dotang Uni Ita",
+                icon: "🥯",
+                desc: "Donut dengan rasa yang lezat",
+                category: "makanan",
+                address: "78 Jl. Ir. H. Juanda, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 10.00 - 17.00", "📍 78 Jl. Ir. H. Juanda", "💰 Rp. 2.500/pcs"],
+                link   : "sidotanguniita.html"
+            },
+            {
+                name: "Toko Restu Ibu",
+                icon: "🏪",
+                desc: "Toko sembako lengkap dan murah",
+                category: "barang",
+                address: "Jl. Rk. Sasta Kusumah, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 08.00 - 17.00", "📍 Jl. Rk. Sasta Kusumah", "💰 Rp. 5.000 - Rp. 30.000"],
+                link: "tokorestuibu.html"
+            },
+            {
+                name: "Soda Gembira",
+                icon: "🥤",
+                desc: "Minuman soda menyegarkan",
+                category: "makanan",
+                address: "60 Jl. Ir. H. Juanda, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 09.00 - 17.00", "📍 60 Jl. Ir. H. Juanda", "💰 Mulai Rp 5.000"],
+                link: "sodagembira.html"
+            },
+            {
+                name: "Nasi Kebuli & Ayam panggang",
+                icon: "🍗",
+                desc: "Nasi kebuli dengan ayam panggang spesial",
+                category: "makanan",
+                address: "31 Jl. Kertabumi, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 09.00 - 20.00", "📍 31 Jl. Kertabumi", "💰 Rp 15.000 - Rp. 30.000"],
+                link: "nasikebuliayam.html"
+            },
+            {
+                name: "Toko Beras 'Karya pusaka'",
+                icon: "🍚",
+                desc: "Toko beras dengan berbagai pilihan kualitas terbaik",
+                category: "makanan",
+                address: "26 Jl. Belakang Ps. Karawang, Jawa Barat",
+                details: ["⏰ Buka: 08.00 - 17.00", "📍26 Jl. Belakang Ps.", "💰 Paket Rp 20.000 - Rp. 40.000"],
+                link: "tokoberas.html"
+            },
+            {
+                name: "Toko Lidya",
+                icon: "🛍",
+                desc: "Toko perlengkapan rumah tangga lengkap",
+                category: "barang",
+                address: "26 Jl. Belakang Ps. Karawang, Jawa Barat",
+                details: ["⏰ Buka: 10.00 - 21.00", "📍 26 Jl. Belakang Ps.", "💰 Mulai Rp 5.000"],
+                link: "tokolidya.html"
+            },
+            {
+                name: "Fotokopi Lisa",
+                icon: "🖨️",
+                desc: "Layanan fotokopi dan print cepat",
+                category: "jasa",
+                address: "57 Jl. Dewi Sartika, Karawang, Jawa Barat",
+                details: ["⏰ Buka: 07.30 - 18.00", "📍 57 Jl. Dewi Sartika", "💰 Rp. 500/lembar"],
+                link: "fotokopilisa.html"
+            }
+        ];
+
+        function renderUMKM(data = umkmData) {
+            const grid = document.getElementById('umkmGrid');
+            grid.innerHTML = '';
+            
+            data.forEach((umkm, index) => {
+                const card = document.createElement('div');
+                card.className = 'umkm-card';
+                card.style.animation = `fadeInUp 0.6s ease ${index * 0.1}s backwards`;
+                
+                const distanceText = umkm.distance ? `🚏 ${umkm.distance} dari Stasiun Karawang` : '🚏 Menghitung jarak...';
+                const updatedDetails = [...umkm.details, distanceText];
+                
+                card.innerHTML = `
+                    <div class="umkm-image">${umkm.icon}</div>
+                    <div class="umkm-content">
+                        <h3>${umkm.name}</h3>
+                        <p>${umkm.desc}</p>
+                        <div class="umkm-details" id="details-${index}">
+                            ${updatedDetails.map(detail => `<span class="detail-tag">${detail}</span>`).join('')}
+                        </div>
+                        <button class="visit-btn" onclick="visitUMKM(${index})">Kunjungi Sekarang</button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCategory(category) {
+            const filtered = umkmData.filter(umkm => umkm.category === category);
+            renderUMKM(filtered);
+            setTimeout(() => {
+                document.getElementById('umkm').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        function visitUMKM(index) {
+            const umkm = umkmData[index];
+            if (umkm && umkm.link) {
+                window.location.href = umkm.link;
+            } else {
+                console.warn('UMKM link not found for index:', index);
+            }
+        }
+
+        function scrollToUMKM() {
+            document.getElementById('umkm').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openVideo() {
+            alert('🎥 Video akan dibuka di tab baru!');
+        }
+
+        // Search functionality
+        const searchBtn = document.getElementById('searchBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        let searchActive = false;
+
+        // Toggle search bar
+        searchBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            searchActive = !searchActive;
+            
+            if (searchActive) {
+                searchInput.classList.add('active');
+                searchInput.focus();
+            } else {
+                searchInput.classList.remove('active');
+                searchInput.value = '';
+                searchResults.classList.remove('active');
+            }
+        });
+
+        // Handle search input
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            
+            if (query.length > 0) {
+                const results = umkmData.filter(umkm => 
+                    umkm.name.toLowerCase().includes(query) || 
+                    umkm.desc.toLowerCase().includes(query) ||
+                    umkm.category.toLowerCase().includes(query)
+                );
+                
+                displaySearchResults(results);
+            } else {
+                searchResults.classList.remove('active');
+            }
+        });
+
+        // Display search results
+        function displaySearchResults(results) {
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">Tidak ada hasil ditemukan</div>';
+            } else {
+                searchResults.innerHTML = results.map(umkm => `
+                    <div class="search-result-item" onclick="selectSearchResult('${umkm.name}')">
+                        <div class="search-result-name">${umkm.icon} ${umkm.name}</div>
+                        <div class="search-result-desc">${umkm.desc}</div>
+                    </div>
+                `).join('');
+            }
+            searchResults.classList.add('active');
+        }
+
+        // Select search result
+        function selectSearchResult(name) {
+            visitUMKM(name);
+            searchInput.classList.remove('active');
+            searchInput.value = '';
+            searchResults.classList.remove('active');
+            searchActive = false;
+        }
+
+        // Close search when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                searchInput.classList.remove('active');
+                searchResults.classList.remove('active');
+                searchInput.value = '';
+                searchActive = false;
+            }
+        });
+
+        // Prevent search results from closing when clicking inside
+        searchResults.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Google Maps Distance Matrix functionality
+        let mapsLoaded = false;
+        const stationOrigin = "Stasiun Karawang, Karawang, Jawa Barat";
+
+        function initMaps() {
+            mapsLoaded = true;
+            calculateAllDistances();
+        }
+
+        function calculateAllDistances() {
+            if (!mapsLoaded) return;
+
+            const service = new google.maps.DistanceMatrixService();
+            
+            umkmData.forEach((umkm, index) => {
+                service.getDistanceMatrix({
+                    origins: [stationOrigin],
+                    destinations: [umkm.address],
+                    travelMode: google.maps.TravelMode.DRIVING,
+                    unitSystem: google.maps.UnitSystem.METRIC,
+                    avoidHighways: false,
+                    avoidTolls: false
+                }, function(response, status) {
+                    if (status === google.maps.DistanceMatrixStatus.OK) {
+                        const results = response.rows[0].elements;
+                        if (results[0].status === google.maps.DistanceMatrixElementStatus.OK) {
+                            const distance = results[0].distance.text;
+                            const duration = results[0].duration.text;
+                            umkm.distance = `${distance} (${duration})`;
+                            updateUMKMDistance(index, umkm.distance);
+                        }
+                    }
+                });
+            });
+        }
+
+        function updateUMKMDistance(index, distance) {
+            const detailElement = document.getElementById(`details-${index}`);
+            if (detailElement) {
+                const detailTags = detailElement.querySelectorAll('.detail-tag');
+                // Remove the loading text if it exists
+                if (detailTags.length > 0 && detailTags[detailTags.length - 1].textContent.includes('Menghitung jarak')) {
+                    detailTags[detailTags.length - 1].remove();
+                }
+                // Add the actual distance
+                const distanceTag = document.createElement('span');
+                distanceTag.className = 'detail-tag';
+                distanceTag.textContent = `🚏 ${distance} dari Stasiun Karawang`;
+                detailElement.appendChild(distanceTag);
+            }
+        }
+
+        // Initialize maps when window loads
+        window.onload = function() {
+            setTimeout(() => {
+                if (!mapsLoaded) {
+                    console.log('Google Maps loading...');
+                }
+            }, 2000);
+        };
+
+        renderUMKM();
+    </script>
+</body>
+</html>
