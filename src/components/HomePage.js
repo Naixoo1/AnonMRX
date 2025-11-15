@@ -196,7 +196,6 @@ const HomePage = () => {
           <li><a href="#home">🏠 Beranda</a></li>
           <li><a href="#umkm">🏪 UMKM</a></li>
           <li><a href="#kategori">📋 Kategori</a></li>
-          <li><a href="#kontak">📞 Kontak</a></li>
         </ul>
         <div className="nav-icons">
           <div className="search-container">
