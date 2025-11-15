@@ -235,7 +235,7 @@ const HomePage = () => {
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <h1 className="hero-title">UMKM KARAWANG</h1>
-          <p className="hero-subtitle">Selamat Datang Di Website UMKM KRW!</p>
+          <div className="hero-subtitle">Selamat Datang Di Website UMKM KRW!</div>
           <button className="hero-cta" onClick={scrollToUMKM}>
             Lihat UMKM →
           </button>
