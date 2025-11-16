@@ -48,7 +48,7 @@ const UMKMDetailPage = () => {
       distance: "0.8 Km (12 menit jalan kaki)",
       features: ["Menu rumahan", "Harga terjangkau", "Porsi besar", "Buka dari pagi", "Bisa pesan antar"],
       description: "Warung Doa Ibu menyajikan berbagai makanan rumahan dengan cita rasa khas ibu. Dengan harga yang terjangkau dan porsi yang mengenyangkan.",
-      images: ["warung1.jpeg", "warung2.jpeg", "warung3.jpeg"],
+      images: ["doaibu.jpeg", "doabu.jpeg", "doamader.jpeg"],
       phone: "+628123456789"
     },
     {
