@@ -283,26 +283,33 @@ const UMKMDetailPage = () => {
         <div className="section">
           <h2>📸 Galeri Foto</h2>
           <div className="photo-gallery">
-            {umkm.images.map((image, index) => (
-              <div key={index} className="photo-item">
-                <img src={"/gambar/" + image} alt={`${umkm.name} ${index + 1}`} className="photo-img" 
-                     onError={(e) => {
-                       console.log('Image failed to load:', "/gambar/" + image);
-                       // Try alternative path
-                       e.target.src = "/main%20stuff/gambar/" + image;
-                     }} />
-                <div className="photo-overlay">
-                  <div className="photo-title">
-                    {index === 0 ? "Tempat duduk" : index === 1 ? "Snack lezat" : "Tempat Usaha"}
-                  </div>
-                  <div className="photo-desc">
-                    {index === 0 ? "Nyaman dan bersih" : 
-                     index === 1 ? "Aneka snack yang unik" : 
-                     "Suasana toko yang nyaman dan bersih"}
+            {umkm.images && umkm.images.length > 0 ? (
+              umkm.images.map((image, index) => (
+                <div key={index} className="photo-item">
+                  <img src={"/gambar/" + image} alt={`${umkm.name} ${index + 1}`} className="photo-img" 
+                       onError={(e) => {
+                         console.log('Image failed to load:', "/gambar/" + image);
+                         // Try alternative path
+                         e.target.src = "/main%20stuff/gambar/" + image;
+                       }} />
+                  <div className="photo-overlay">
+                    <div className="photo-title">
+                      {index === 0 ? "Tempat duduk" : index === 1 ? "Snack lezat" : "Tempat Usaha"}
+                    </div>
+                    <div className="photo-desc">
+                      {index === 0 ? "Nyaman dan bersih" : 
+                       index === 1 ? "Aneka snack yang unik" : 
+                       "Suasana toko yang nyaman dan bersih"}
+                    </div>
                   </div>
                 </div>
+              ))
+            ) : (
+              <div className="empty-gallery">
+                <div className="empty-gallery-icon">📷</div>
+                <p>Belum ada foto galeri</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
