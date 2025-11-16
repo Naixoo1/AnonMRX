@@ -217,24 +217,35 @@ const HomePage = () => {
     const distanceText = umkm.distance || '🚏 Menghitung jarak...';
     const updatedDetails = [...umkm.details, distanceText];
 
+    const handleCardClick = () => {
+      // Navigate to React detail page using the UMKM ID
+      window.location.href = `/umkm/${umkm.id}`;
+    };
+
+    const handleDetailsClick = (e) => {
+      e.stopPropagation();
+      setShowDetails(!showDetails);
+    };
+
     return (
       <div 
         className="umkm-card" 
         style={{ animation: `fadeInUp 0.6s ease ${index * 0.1}s backwards` }}
-        onClick={() => setShowDetails(!showDetails)}
+        onClick={handleCardClick}
       >
         <div className="umkm-image">{umkm.icon}</div>
         <div className="umkm-content">
           <h3>{umkm.name}</h3>
           <p>{umkm.desc}</p>
-          <div className={`umkm-details ${showDetails ? 'active' : ''}`} id={`details-${index}`}>
+          <div 
+            className={`umkm-details ${showDetails ? 'active' : ''}`} 
+            id={`details-${index}`}
+            onClick={handleDetailsClick}
+          >
             {updatedDetails.map((detail, idx) => (
               <span key={idx} className="detail-tag">{detail}</span>
             ))}
           </div>
-          <button className="visit-btn" onClick={(e) => { e.stopPropagation(); visitUMKM(index); }}>
-            Kunjungi Sekarang
-          </button>
         </div>
       </div>
     );
