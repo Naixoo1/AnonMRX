@@ -7,13 +7,19 @@
 }
 
 body {
-  font-family: 'Inter', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
   background: #0a0a0a;
   color: #fff;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+}
+
+.App {
+  margin: 0;
+  padding: 0;
 }
 
 .contact-buttons {
@@ -76,6 +82,7 @@ body {
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-menu {
@@ -255,6 +262,107 @@ body {
   color: #888;
 }
 
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.7rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 25px;
+  transition: all 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.back-btn:hover {
+  background: rgba(102, 126, 234, 0.2);
+  border-color: #667eea;
+  transform: translateX(-5px);
+}
+
+/* Hero Section - Detail Page */
+.hero {
+  position: relative;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: 80px;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5));
+  z-index: 1;
+}
+
+.hero .hero-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 800px;
+  padding: 3rem 2rem;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.hero .hero-icon {
+  font-size: 4rem;
+  line-height: 1;
+  justify-self: start;
+}
+
+.hero .hero-info {
+  justify-self: start;
+}
+
+.hero .hero-info h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero .hero-info p {
+  font-size: 1.25rem;
+  color: #f0f0f0;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.hero .info-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: flex-start;
+}
+
+.hero .info-tags .tag {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
 /* Hero Section */
 .hero-section {
   position: relative;
@@ -264,6 +372,12 @@ body {
   justify-content: center;
   overflow: hidden;
   margin-top: 0;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 75%, rgba(0,0,0,0.4) 95%),
+    url('https://awsimages.detik.net.id/community/media/visual/2023/10/05/tugu-padi-icon-perkotaan-karawang_169.jpeg?w=1200');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
 }
 
 .hero-video {
@@ -289,8 +403,9 @@ body {
   position: relative;
   z-index: 2;
   text-align: center;
-  max-width: 1200px;
+  max-width: 900px;
   padding: 2rem;
+  margin: 0 auto;
 }
 
 .hero-title {
@@ -519,14 +634,13 @@ body {
 
 .umkm-image {
   width: 100%;
-  height: 120px;
+  height: 200px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 5rem;
   transition: transform 0.3s;
-  padding: 1rem;
 }
 
 .umkm-card:hover .umkm-image {
@@ -559,18 +673,24 @@ body {
 }
 
 .umkm-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.umkm-details.active {
+  max-height: 300px;
 }
 
 .detail-tag {
-  font-size: 0.85rem;
-  color: #ccc;
-  line-height: 1.4;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
+  display: inline-block;
+  background: rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin: 0.3rem;
+  font-size: 0.9rem;
+  color: #b8c5ff;
 }
 
 .visit-btn {
@@ -627,86 +747,11 @@ body {
   }
 }
 
-/* Detail Page Styles */
-/* Updated: November 2025 */
-.back-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #fff;
-  text-decoration: none;
-  padding: 0.7rem 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 25px;
-  transition: all 0.3s;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.back-btn:hover {
-  background: rgba(102, 126, 234, 0.2);
-  border-color: #667eea;
-  transform: translateX(-5px);
-}
-
-/* Hero Section - Detail Page */
 .hero {
   margin-top: 80px;
-  padding: 3rem 2rem;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.hero-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 3rem;
-  align-items: center;
-}
-
-.hero-icon {
-  font-size: 10rem;
-  text-align: center;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
-.hero-info h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-info p {
-  font-size: 1.2rem;
-  color: #aaa;
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-
-.info-tags {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.2rem;
-  background: rgba(102, 126, 234, 0.2);
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 25px;
-  font-size: 0.95rem;
+  padding: 0;
+  background: transparent;
+  border-bottom: none;
 }
 
 /* Container */
@@ -913,13 +958,10 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .hero-content {
-    grid-template-columns: 1fr;
-  }
-  .hero-icon {
+  .hero .hero-icon {
     font-size: 6rem;
   }
-  .hero-info h1 {
+  .hero .hero-info h1 {
     font-size: 2rem;
   }
   .location-grid {
